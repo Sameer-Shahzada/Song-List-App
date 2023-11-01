@@ -1,0 +1,161 @@
+{
+	"info": {
+		"_postman_id": "2ea4b50d-0818-4fb9-92e6-01ddf2b71667",
+		"name": "Login Test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2053681",
+		"_collection_link": "https://galactic-eclipse-994843.postman.co/workspace/Goongoonalo~fc75500b-c6d5-413d-ac29-442288c56b52/collection/2053681-2ea4b50d-0818-4fb9-92e6-01ddf2b71667?action=share&source=collection_link&creator=2053681"
+	},
+	"item": [
+		{
+			"name": "Send OTP",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"requestId\", jsonData.requestId);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"phoneNumber\": \"{{userId}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{endpoint}}/auth/login",
+					"host": [
+						"{{endpoint}}"
+					],
+					"path": [
+						"auth",
+						"login"
+					]
+				},
+				"description": "Pass phoneNumber in the request body"
+			},
+			"response": [
+				{
+					"name": "Send OTP",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"phoneNumber\": \"{{userId}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{endpoint}}/auth/login",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Mon, 11 Apr 2022 07:15:43 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "72"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "x-amzn-RequestId",
+							"value": "e1257f24-74ac-40da-a28f-64da5dc6c518"
+						},
+						{
+							"key": "access-control-allow-origin",
+							"value": "*"
+						},
+						{
+							"key": "x-amzn-Remapped-Content-Length",
+							"value": "72"
+						},
+						{
+							"key": "x-amz-apigw-id",
+							"value": "QZ5QhHGvhcwFY3w="
+						},
+						{
+							"key": "X-Amzn-Trace-Id",
+							"value": "Root=1-6253d59c-73f2dc306ac721b54aeb61df;Sampled=0"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"OTP sent to user\",\n    \"requestId\": \"6253d59f6b62269641b9e004\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Verify OTP",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"token\", jsonData.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"phoneNumber\": \"{{userId}}\",\n    \"requestId\": \"{{requestId}}\",\n    \"otp\": \"5678\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{endpoint}}/auth/verify_otp",
+					"host": [
+						"{{endpoint}}"
+					],
+					"path": [
+						"auth",
+						"verify_otp"
+					]
+				},
+				"description": "``` coffeescript\nphoneNumber: same phone number used to send OTP\nrequestId: requestId received in send OTP response.\notp: use 5678 as OTP\n\n ```"
+			},
+			"response": []
+		}
+	]
+}

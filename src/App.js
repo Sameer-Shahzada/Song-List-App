@@ -1,11 +1,12 @@
 import React from 'react'
 import SignIn from './components/SignIn'
-// import OTPVerification from './components/OTPVerification'
+import './App.css'
+
 const App = () => {
+
   return (
     <>
-      <SignIn />
-      {/* <OTPVerification/> */}
+        <SignIn />
     </>
   )
 }
