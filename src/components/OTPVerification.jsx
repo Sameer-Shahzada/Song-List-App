@@ -29,7 +29,8 @@ const OTPVerification = ({ phoneNumber, requestId }) => {
   };
 
   const handleVerify = () => {
-    // console.table(requestId , phoneNumber);
+    
+    console.log(requestId , phoneNumber);
     // Build the OTP from the array of input values
     const enteredOTP = otp.join("");
     console.log("received otp - ", enteredOTP);
@@ -39,6 +40,8 @@ const OTPVerification = ({ phoneNumber, requestId }) => {
       phoneNumber: "+91" + phoneNumber,
       otp: enteredOTP,
     };
+    sessionStorage.setItem('Auth' , JSON.stringify(data))
+    
     axios
       .post(url, data)
       .then((response) => {
