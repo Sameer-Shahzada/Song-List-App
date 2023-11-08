@@ -9,27 +9,33 @@ import {
 } from "@mui/material";
 import OTPVerification from "./OTPVerification";
 import IndiaFlag from "../images/indiaflag25.png";
+import { useNavigate } from "react-router-dom";
+
 const SignIn = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [requestId, setRequestId] = useState("");
 
+  const navigate = useNavigate();
   const handleSignIn = () => {
     let url = "https://dev.api.goongoonalo.com/v1/auth/login";
     let data = {
       phoneNumber: "+91" + phoneNumber,
     };
-    
+
     console.log(data);
     axios
       .post(url, data)
       .then((response) => {
         setRequestId(response.data.requestId);
         console.log(response);
+
+        
+        navigate.push("/otp-verification");
       })
       .catch((error) => {
         if (phoneNumber.length > 10) {
           console.log("Phone number is more than 10 digits");
-        } else if(phoneNumber.length < 10) {
+        } else if (phoneNumber.length < 10) {
           console.log("Phone number is less than 10 digits");
         } else {
           console.log('Login API error...');
@@ -69,7 +75,7 @@ const SignIn = () => {
               size="small"
               variant="outlined"
               // type="number"
-              value={phoneNumber.replace(/[^0-9]/g,"")}
+              value={phoneNumber.replace(/[^0-9]/g, "")}
               placeholder="Phone Number"
               onChange={(e) => setPhoneNumber(e.target.value)}
               label="PHONE NUMBER"

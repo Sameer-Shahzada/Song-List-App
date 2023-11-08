@@ -1,14 +1,19 @@
 import React from "react";
 import songIcon from "../images/songIcon.svg";
 import logoutIcon from "../images/logoutIcon.svg";
-import { Box, Typography, Breadcrumbs, Link, Button } from "@mui/material";
+import { Box, Typography, Breadcrumbs, Button } from "@mui/material";
+import { Link } from "react-router-dom";
 import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
+import '../App.css'
 
 const SongList = () => {
+  
   const handleLogout = () => {
     sessionStorage.clear();
-    window.location.href = "";
+    window.location.href = "/";
+
   };
+
   return (
     <>
       {/* Parent Grid */}
@@ -95,19 +100,27 @@ const SongList = () => {
 
         <Grid md={9.5} sx={{ border: 2, borderColor: "blue" }}>
           <Grid sx={{ border: 1 }}>
-            <Box sx={{ py: 2, px: 3, border: 1 }}>
+            <Box component='div' role='presentation' sx={{ py: 2, px: 3, border: 1 }}>
               <Breadcrumbs aria-label="breadcrumb">
-                <Link underline="hover" color="inherit" href="/">
+                <Link  
+                  className="link"
+                  to="/signin">
                   First-level Menu
                 </Link>
                 <Link
-                  underline="hover"
-                  color="inherit"
-                  href="/material-ui/getting-started/installation/"
+                  className="link"
+                  to="/otp_verification"
                 >
                   Second-level Menu
                 </Link>
-                <Typography color="text.primary">Current Page</Typography>
+                <Link
+                  // underline="hover"
+                  color="text.primary"
+                  to="/song_list"
+                  aria-current="page"
+                >
+                  Current Page
+                </Link>
               </Breadcrumbs>
             </Box>
             <Box
@@ -119,7 +132,7 @@ const SongList = () => {
                 justifyContent: "space-between",
               }}
             >
-              <Typography variant="body1" sx={{fontWeight:600}}>Songs</Typography>
+              <Typography variant="body1" sx={{ fontWeight: 600 }}>Songs</Typography>
               <Button
                 variant="contained"
                 size="small"
