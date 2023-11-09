@@ -2,10 +2,3 @@ body {
   margin:0;
   height:0;
 }
-.link {
-   text-decoration:none;
-   color:black;
-}
-.link:hover {
-  text-decoration: underline;
-} 

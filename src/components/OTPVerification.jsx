@@ -1,11 +1,11 @@
 import axios from "axios";
 import { React, useState } from "react";
 import { Box, Typography, TextField, Button, Link } from "@mui/material";
-import SongList from "./SongList";
+// import SongList from "./SongList";
 
-const OTPVerification = ({ phoneNumber, requestId }) => {
+const OTPVerification = ({ phoneNumber, requestId, setAuth }) => {
   const [otp, setOtp] = useState(Array(4).fill(""));
-  const [isOTPVerified, setIsOTPVerified] = useState(false);
+
   const inputRefs = new Array(4);
 
   const handleInput = (e, index) => {
@@ -29,8 +29,8 @@ const OTPVerification = ({ phoneNumber, requestId }) => {
   };
 
   const handleVerify = () => {
-    
-    console.log(requestId , phoneNumber);
+
+    console.log(requestId, phoneNumber);
     // Build the OTP from the array of input values
     const enteredOTP = otp.join("");
     console.log("received otp - ", enteredOTP);
@@ -40,15 +40,13 @@ const OTPVerification = ({ phoneNumber, requestId }) => {
       phoneNumber: "+91" + phoneNumber,
       otp: enteredOTP,
     };
-    sessionStorage.setItem('Auth' , JSON.stringify(data))
-    
+    sessionStorage.setItem('Auth', JSON.stringify(data))
+    setAuth(data)
+
     axios
       .post(url, data)
       .then((response) => {
         console.log(response);
-        if (response.status === 200) {
-          setIsOTPVerified(true); // Mark OTP as verified
-        }
         console.log(response.status);
       })
       .catch((error) => {
@@ -78,13 +76,11 @@ const OTPVerification = ({ phoneNumber, requestId }) => {
       })
       .catch((error) => {
         console.log('resend')
-       
+
       });
   };
 
-  return isOTPVerified ? (
-    <SongList />
-  ) : (
+  return (
     <>
       <Box
         sx={{

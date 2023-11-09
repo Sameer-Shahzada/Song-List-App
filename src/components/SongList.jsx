@@ -1,17 +1,15 @@
 import React from "react";
 import songIcon from "../images/songIcon.svg";
 import logoutIcon from "../images/logoutIcon.svg";
-import { Box, Typography, Breadcrumbs, Button } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Box, Typography, Breadcrumbs, Button, Link } from "@mui/material";
+// Note-> Link from MUI use href='' , Link from react-router-dom use to=''
 import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
-import '../App.css'
 
 const SongList = () => {
-  
+
   const handleLogout = () => {
     sessionStorage.clear();
     window.location.href = "/";
-
   };
 
   return (
@@ -98,36 +96,42 @@ const SongList = () => {
 
         {/* Second Grid */}
 
-        <Grid md={9.5} sx={{ border: 2, borderColor: "blue" }}>
+        <Grid md={9.5}
+          // sx={{ border: 2, borderColor: "blue" }}
+        >
           <Grid sx={{ border: 1 }}>
-            <Box component='div' role='presentation' sx={{ py: 2, px: 3, border: 1 }}>
+            <Box component='div' role='presentation' sx={{ py: 2, px: 3,}}>
               <Breadcrumbs aria-label="breadcrumb">
-                <Link  
-                  className="link"
-                  to="/signin">
+                <Link
+                  underline="hover"
+                  color="inherit"
+                // href="/signin"
+                >
                   First-level Menu
                 </Link>
                 <Link
-                  className="link"
-                  to="/otp_verification"
+                  underline="hover"
+                  color="inherit"
+                // href="/otp_verification"
                 >
                   Second-level Menu
                 </Link>
-                <Link
-                  // underline="hover"
+                <Typography
                   color="text.primary"
-                  to="/song_list"
                   aria-current="page"
                 >
                   Current Page
-                </Link>
+                </Typography>
+                {/* <Link href="/song_list2">
+                  Third-level Menu
+                </Link> */}
               </Breadcrumbs>
             </Box>
             <Box
               sx={{
-                pt: 0.5,
+                py: 0.8,
                 px: 3,
-                border: 1,
+                // border: 1,
                 display: "flex",
                 justifyContent: "space-between",
               }}

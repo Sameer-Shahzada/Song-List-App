@@ -9,13 +9,12 @@ import {
 } from "@mui/material";
 import OTPVerification from "./OTPVerification";
 import IndiaFlag from "../images/indiaflag25.png";
-import { useNavigate } from "react-router-dom";
 
-const SignIn = () => {
+const SignIn = ({ setAuth }) => {
+
   const [phoneNumber, setPhoneNumber] = useState("");
   const [requestId, setRequestId] = useState("");
 
-  const navigate = useNavigate();
   const handleSignIn = () => {
     let url = "https://dev.api.goongoonalo.com/v1/auth/login";
     let data = {
@@ -28,9 +27,6 @@ const SignIn = () => {
       .then((response) => {
         setRequestId(response.data.requestId);
         console.log(response);
-
-        
-        navigate.push("/otp-verification");
       })
       .catch((error) => {
         if (phoneNumber.length > 10) {
@@ -44,7 +40,7 @@ const SignIn = () => {
   };
 
   return requestId ? (
-    <OTPVerification requestId={requestId} phoneNumber={phoneNumber} />
+    <OTPVerification requestId={requestId} phoneNumber={phoneNumber} setAuth={setAuth} />
   ) : (
     <>
       <Box
