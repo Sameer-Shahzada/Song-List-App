@@ -1,4 +1,8 @@
 import * as React from 'react';
+//redux-store
+import {useDispatch, useSelector} from 'react-redux'
+import {setImage , deleteImage} from '../Redux/Slices/imageSlice'
+
 // mui components
 import {
     Button, Dialog, DialogTitle, DialogContent, DialogActions, IconButton,
@@ -44,6 +48,12 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 
 export default function CustomizedDialogs() {
     const [open, setOpen] = React.useState(false);
+   // const [selectedImage, setSelectedImage] = React.useState(null);
+    // const [imageName, setImageName] = React.useState('');
+    
+    const dispatch = useDispatch();
+    const selectedImage = useSelector((store)=> store.imageFile.selectedImage);
+    const imageName = useSelector((store) => store.imageFile.imageName);
     // const [file, setFile] = React.useState(null)
 
     // const handleFileChange = (event) => {
@@ -57,6 +67,27 @@ export default function CustomizedDialogs() {
     const handleClose = () => {
         setOpen(false);
     };
+
+    const handleFileChange = (event) => {
+        const selectedFile = event.target.files[0];
+        console.log('selectedfile - ', selectedFile)
+        // setSelectedImage(selectedFile);
+        // setImageName(selectedFile.name);
+
+        dispatch(setImage({selectedImage:selectedFile,imageName:selectedFile.name}))
+    };
+
+    const handleDeleteIcon = () => {
+        // setSelectedImage(null)
+        // setImageName('')
+        dispatch(deleteImage())
+    }
+
+    // if (fileInputRef.current) {
+    //     fileInputRef.current.value = '';
+    // }
+
+
 
     return (
         <>
@@ -120,9 +151,14 @@ export default function CustomizedDialogs() {
                             <Grid sx={{ mb: 2 }}>
                                 <Button component="label" variant="outlined"
                                     startIcon={<FileUploadOutlinedIcon />}
-                                    sx={{ textTransform: 'capitalize', color: 'black', borderColor: 'gray' }}>
+                                    sx={{ textTransform: 'capitalize', color: 'black', borderColor: grey['A400'], 
+                                        '&:hover':{
+                                            borderColor:grey[900],
+                                            backgroundColor:grey[50],
+                                        } 
+                                    }}>
                                     Click to Upload Profile Thumbnail
-                                    <VisuallyHiddenInput type="file" />
+                                    <VisuallyHiddenInput type="file" onChange={handleFileChange} />
                                 </Button>
                             </Grid>
 
@@ -130,20 +166,33 @@ export default function CustomizedDialogs() {
                                 mb: 2, display: 'flex', justifyContent: 'space-between',
                                 border: 1, p: 1, borderRadius: 1, borderColor: grey['A400'],
                                 '&:hover': {
-                                    borderColor: grey[900]
+                                    borderColor: grey[900],
+                                    
                                 }
                             }}>
+                                <Box sx={{display:'flex', }}>
                                 <Box sx={{
                                     display: 'flex', justifyContent: 'center', alignItems: 'center',
                                     height: '48px', width: '48px',
                                 }}>
-                                    1
+                                {selectedImage && (
+                                    <img src={URL.createObjectURL(selectedImage)} alt="Selected" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                 )}
                                 </Box>
+                                <Box sx={{display:'flex', alignItems:'center',px:0.5}}>
+                                    <Typography variant='caption'>{imageName}</Typography>
+                                </Box>
+                                
+                                </Box>
+                               
+                               
+                                                               
                                 <Box sx={{
                                     display: 'flex', justifyContent: 'center', alignItems: 'center',
+                                    cursor:'pointer',
                                     color: grey['A400'], '&:hover': { color: grey['A700'] }
                                 }}>
-                                    <DeleteOutlinedIcon />
+                                    <DeleteOutlinedIcon onClick={handleDeleteIcon} />
                                 </Box>
                             </Grid>
 
