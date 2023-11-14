@@ -1,9 +1,14 @@
 import React from "react";
+// mui components
+import { Box, Typography, Breadcrumbs, Link } from "@mui/material";
+// Note-> Link from MUI use href='' , Link from react-router-dom use to=''
+//mui icons
 import songIcon from "../images/songIcon.svg";
 import logoutIcon from "../images/logoutIcon.svg";
-import { Box, Typography, Breadcrumbs, Button, Link } from "@mui/material";
-// Note-> Link from MUI use href='' , Link from react-router-dom use to=''
+// mui grid system
 import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
+
+import Modal from './Modal'
 
 const SongList = () => {
 
@@ -81,7 +86,7 @@ const SongList = () => {
               }}
             >
               <Box
-                sx={{ marginLeft: 3, marginRight: 2 }}
+                sx={{ marginLeft: 3, marginRight: 2, cursor:'pointer' }}
                 onClick={handleLogout}
               >
                 <img src={logoutIcon} alt="logoutIcon" />
@@ -137,20 +142,7 @@ const SongList = () => {
               }}
             >
               <Typography variant="body1" sx={{ fontWeight: 600 }}>Songs</Typography>
-              <Button
-                variant="contained"
-                size="small"
-                sx={{
-                  backgroundColor: "#FDB927",
-                  color: "black",
-                  "&:hover": { backgroundColor: "#FDB927", color: "white" },
-                  textTransform: "capitalize",
-                  fontSize: "14px",
-                  boxShadow: "0px 2px 0px 0px rgba(0, 0, 0, 0.04)",
-                }}
-              >
-                Add Songs
-              </Button>
+              <Modal />
             </Box>
           </Grid>
 
