@@ -1,7 +1,7 @@
 import * as React from 'react';
 //redux-store
-import {useDispatch, useSelector} from 'react-redux'
-import {setImage , deleteImage} from '../Redux/Slices/imageSlice'
+// import {useDispatch, useSelector} from 'react-redux'
+// import {setImage , deleteImage} from '../Redux/Slices/imageSlice'
 
 // mui components
 import {
@@ -48,18 +48,13 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 
 export default function CustomizedDialogs() {
     const [open, setOpen] = React.useState(false);
-   // const [selectedImage, setSelectedImage] = React.useState(null);
-    // const [imageName, setImageName] = React.useState('');
+   const [selectedImage, setSelectedImage] = React.useState(null);
+    const [imageName, setImageName] = React.useState('');
     
-    const dispatch = useDispatch();
-    const selectedImage = useSelector((store)=> store.imageFile.selectedImage);
-    const imageName = useSelector((store) => store.imageFile.imageName);
-    // const [file, setFile] = React.useState(null)
-
-    // const handleFileChange = (event) => {
-    //     const selectedFile = event.target.files[0];
-    //     setFile(selectedFile);
-    // };
+    // const dispatch = useDispatch();
+    // const selectedImage = useSelector((store)=> store.imageFile.selectedImage);
+    // const imageName = useSelector((store) => store.imageFile.imageName);
+    
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -69,25 +64,27 @@ export default function CustomizedDialogs() {
     };
 
     const handleFileChange = (event) => {
+        
         const selectedFile = event.target.files[0];
         console.log('selectedfile - ', selectedFile)
-        // setSelectedImage(selectedFile);
-        // setImageName(selectedFile.name);
+        setSelectedImage(selectedFile);
+        setImageName(selectedFile.name);
 
-        dispatch(setImage({selectedImage:selectedFile,imageName:selectedFile.name}))
+        // dispatch(setImage({selectedImage:selectedFile,imageName:selectedFile.name}))
     };
 
     const handleDeleteIcon = () => {
-        // setSelectedImage(null)
-        // setImageName('')
-        dispatch(deleteImage())
+        setSelectedImage(null)
+        setImageName('')
+        // dispatch(deleteImage())
+
+        // Reset the file input 
+        const fileInput  = document.getElementById('fileInput')
+        console.log(fileInput)
+        if(fileInput) {
+            fileInput.value = '';    // Reset 
+        }
     }
-
-    // if (fileInputRef.current) {
-    //     fileInputRef.current.value = '';
-    // }
-
-
 
     return (
         <>
@@ -158,7 +155,7 @@ export default function CustomizedDialogs() {
                                         } 
                                     }}>
                                     Click to Upload Profile Thumbnail
-                                    <VisuallyHiddenInput type="file" onChange={handleFileChange} />
+                                    <VisuallyHiddenInput  id="fileInput" type="file" onChange={handleFileChange} />
                                 </Button>
                             </Grid>
 
