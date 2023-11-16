@@ -1,21 +1,42 @@
 import React from "react";
+// redux-store
+import { useSelector, useDispatch } from "react-redux";
+import { deleteSong } from "../Redux/Slices/songSlice";
+// import { deleteSongList } from "../Redux/Slices/songsListSlice";
+
 // mui components
-import { Box, Typography, Breadcrumbs, Link } from "@mui/material";
+import { Box, Typography, Breadcrumbs, Link, List, ListItem } from "@mui/material";
 // Note-> Link from MUI use href='' , Link from react-router-dom use to=''
 //mui icons
 import songIcon from "../images/songIcon.svg";
 import logoutIcon from "../images/logoutIcon.svg";
+import PlayCircleIcon from '@mui/icons-material/PlayCircle';
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 // mui grid system
 import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
+// mui colors
+import { grey } from "@mui/material/colors";
 
 import Modal from './Modal'
 
 const SongList = () => {
 
+  const songList = useSelector((store) => store.songs)  
+  console.log(songList)
+
+  const date = new Date()
+
   const handleLogout = () => {
     sessionStorage.clear();
     window.location.href = "/";
   };
+
+  const dispatch = useDispatch()
+  const handleSongDelete = () => {
+    dispatch(deleteSong())  
+    // dispatch(deleteSongList())
+    console.log('deleted')
+  }
 
   return (
     <>
@@ -86,7 +107,7 @@ const SongList = () => {
               }}
             >
               <Box
-                sx={{ marginLeft: 3, marginRight: 2, cursor:'pointer' }}
+                sx={{ marginLeft: 3, marginRight: 2, cursor: 'pointer' }}
                 onClick={handleLogout}
               >
                 <img src={logoutIcon} alt="logoutIcon" />
@@ -102,10 +123,10 @@ const SongList = () => {
         {/* Second Grid */}
 
         <Grid md={9.5}
-          // sx={{ border: 2, borderColor: "blue" }}
+        // sx={{ border: 2, borderColor: "blue" }}
         >
           <Grid sx={{ border: 1 }}>
-            <Box component='div' role='presentation' sx={{ py: 2, px: 3,}}>
+            <Box component='div' role='presentation' sx={{ py: 2, px: 3, }}>
               <Breadcrumbs aria-label="breadcrumb">
                 <Link
                   underline="hover"
@@ -147,11 +168,55 @@ const SongList = () => {
           </Grid>
 
           <Grid>
-            <Box>1</Box>
-          </Grid>
+            <Box sx={{
+              display: 'flex', justifyContent: 'space-between',
+              pt: 2.5, pb: 2, px: 3.5, textTransform: 'uppercase', fontSize: '14px',
+              fontFamily: 'roboto'
+            }}>
+              <Box>Song Name</Box>
+              <Box>Source</Box>
+              <Box>Added On</Box>
+              <Box></Box>
+              <Box></Box>
+            </Box>
 
+            <List>
+              {
+                songList.map((song, index) => {
+                  return (
+                    <ListItem key={index} sx={{ display: 'flex', justifyContent: 'space-between', pt: 2.5, pb: 2, px: 1.5, border: 1 }}>
+
+                      <Box sx={{ display: 'flex' }}>
+                        <Box sx={{
+                          display: 'flex', justifyContent: 'center', alignItems: 'center',
+                          height: '48px', width: '48px',
+                        }}>
+                         <img src={URL.createObjectURL(song.payload.image)} alt={song.payload.image_name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+
+
+                        </Box>
+                        <Box sx={{ display: 'flex', alignItems: 'center', px: 0.5 }}>
+                          <Typography variant='caption'>{song.payload.name}</Typography>
+                        </Box>
+                      </Box>
+                      <Box sx={{ display: 'flex', alignItems: 'center' }}><Typography variant="body2" align="center">{song.payload.source}</Typography> </Box>
+                      <Box sx={{ display: 'flex', alignItems: 'center' }}>{date.toLocaleDateString()}</Box>
+                      <Box sx={{ display: 'flex', alignItems: 'center' }}><PlayCircleIcon style={{ color: '#FDB927' }} /></Box>
+                      <Box sx={{
+                        display: 'flex', justifyContent: 'center', alignItems: 'center',
+                        cursor: 'pointer',
+                        color: grey['A400'], '&:hover': { color: grey['A700'] }
+                      }}><DeleteOutlinedIcon onClick={handleSongDelete} /></Box>
+
+                    </ListItem>
+                  )
+                })
+              }
+
+            </List>
+          </Grid>
           <Grid>
-            <Box>1</Box>
+            <Box>2</Box>
           </Grid>
         </Grid>
       </Grid>
