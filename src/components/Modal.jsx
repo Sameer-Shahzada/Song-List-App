@@ -71,13 +71,13 @@ export default function CustomizedDialogs() {
         setImageName(selectedFile.name);
     };
 
-    const handleDeleteIcon = () => {
+    const handleDeleteImage = () => {
         setSelectedImage(null)
         setImageName('')
 
         // Reset the file input 
         const fileInput = document.getElementById('fileInput')
-        // console.log(fileInput)
+        console.log(fileInput)
         if (fileInput) {
             fileInput.value = '';    // Reset 
         }
@@ -93,20 +93,7 @@ export default function CustomizedDialogs() {
                 source: songSource,
                 image: selectedImage,
                 image_name: imageName,
-                
             })))))
-
-
-        // const songData = {
-        //     name: songName,
-        //     link: songLink,
-        //     source: songSource,
-        //     image: selectedImage ? selectedImage.name : null, // Store file name or identifier
-        //     image_name: imageName,
-        // };
-    
-        // dispatch(addNewSong(songData));
-        // dispatch(addSong(songData));
     }
 
     return (
@@ -179,7 +166,7 @@ export default function CustomizedDialogs() {
                                         }
                                     }}>
                                     Click to Upload Profile Thumbnail
-                                    <VisuallyHiddenInput id="fileInput" type="file" onChange={handleFileChange} />
+                                    <VisuallyHiddenInput id="fileInput" type="file" onChange={handleFileChange}  />
                                 </Button>
                             </Grid>
 
@@ -197,7 +184,7 @@ export default function CustomizedDialogs() {
                                         height: '48px', width: '48px',
                                     }}>
                                         {selectedImage && (
-                                            <img src={URL.createObjectURL(selectedImage)} alt="Selected" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                            <img src={URL.createObjectURL(selectedImage)} alt="Selected" style={{ width: '100%', height: '100%', objectFit: 'cover',  }} />
                                         )}
                                     </Box>
                                     <Box sx={{ display: 'flex', alignItems: 'center', px: 0.5 }}>
@@ -211,7 +198,7 @@ export default function CustomizedDialogs() {
                                     cursor: 'pointer',
                                     color: grey['A400'], '&:hover': { color: grey['A700'] }
                                 }}>
-                                    <DeleteOutlinedIcon onClick={handleDeleteIcon} />
+                                    <DeleteOutlinedIcon onClick={handleDeleteImage} />
                                 </Box>
                             </Grid>
 
@@ -235,7 +222,6 @@ export default function CustomizedDialogs() {
                     </Button>
                 </DialogActions>
             </BootstrapDialog>
-            {/* <SongList selectedImage={selectedImage} /> */}
         </>
     );
 }

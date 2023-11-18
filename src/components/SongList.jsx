@@ -1,8 +1,7 @@
 import React from "react";
 // redux-store
 import { useSelector, useDispatch } from "react-redux";
-import { deleteSong } from "../Redux/Slices/songSlice";
-// import { deleteSongList } from "../Redux/Slices/songsListSlice";
+import { deleteSongList } from "../Redux/Slices/songsListSlice";
 
 // mui components
 import { Box, Typography, Breadcrumbs, Link, List, ListItem } from "@mui/material";
@@ -32,9 +31,8 @@ const SongList = () => {
   };
 
   const dispatch = useDispatch()
-  const handleSongDelete = () => {
-    dispatch(deleteSong())  
-    // dispatch(deleteSongList())
+  const handleSongDelete = (index) => {
+    dispatch(deleteSongList(index))
     console.log('deleted')
   }
 
@@ -183,6 +181,7 @@ const SongList = () => {
             <List>
               {
                 songList.map((song, index) => {
+                  console.log(index)
                   return (
                     <ListItem key={index} sx={{ display: 'flex', justifyContent: 'space-between', pt: 2.5, pb: 2, px: 1.5, border: 1 }}>
 
@@ -206,7 +205,7 @@ const SongList = () => {
                         display: 'flex', justifyContent: 'center', alignItems: 'center',
                         cursor: 'pointer',
                         color: grey['A400'], '&:hover': { color: grey['A700'] }
-                      }}><DeleteOutlinedIcon onClick={handleSongDelete} /></Box>
+                      }}><DeleteOutlinedIcon onClick={() => handleSongDelete(index)} /></Box>
 
                     </ListItem>
                   )

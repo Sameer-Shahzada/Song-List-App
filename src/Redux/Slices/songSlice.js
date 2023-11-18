@@ -11,34 +11,26 @@ const songSlice = createSlice({
         image_name:''
     },
 
-    reducers: {
+    reducers: {       
         addSong: (state, action) => {
             return {
                 ...state, ...action.payload
-                
-                // ...state, 
-                // name: action.payload.name,
-                // link: action.payload.link,
-                // source: action.payload.source,
-                // image: action.payload.image, // Store reference or identifier
-                // image_name:action.payload.image_name
-
-    
             }
         },
-
-        deleteSong: (state) => {
-                return {
-                    ...state,
-                    name: '',
-                    link: '',
-                    source: '',
-                    image: null,
-                    image_name:''
-                }
-        }
+        
+        // deleteSong: (state) => {
+        //         return {
+        //             ...state,
+        //             name: '',
+        //             link: '',
+        //             source: '',
+        //             image: null,
+        //             image_name:''
+        //         }
+        // }
+        // Note -> This reducer action doesn't work properly
     }
 })
 
-export const {addSong , deleteSong} = songSlice.actions
+export const {addSong , deleteSong } = songSlice.actions
 export default songSlice.reducer
