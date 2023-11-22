@@ -20,7 +20,7 @@ import Modal from './Modal'
 
 const SongList = () => {
 
-  const songList = useSelector((store) => store.songs)  
+  const songList = useSelector((store) => store.songs)
   console.log(songList)
 
   const date = new Date()
@@ -28,12 +28,17 @@ const SongList = () => {
   const handleLogout = () => {
     sessionStorage.clear();
     window.location.href = "/";
+    // localStorage.clear();
   };
 
   const dispatch = useDispatch()
   const handleSongDelete = (index) => {
     dispatch(deleteSongList(index))
     console.log('deleted')
+  }
+
+  function isValidBlob(obj) {
+    return obj instanceof Blob;
   }
 
   return (
@@ -190,8 +195,23 @@ const SongList = () => {
                           display: 'flex', justifyContent: 'center', alignItems: 'center',
                           height: '48px', width: '48px',
                         }}>
-                         <img src={URL.createObjectURL(song.payload.image)} alt={song.payload.image_name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-
+                          {song.payload.image && isValidBlob(song.payload.image) ? (
+                            <img
+                              src={URL.createObjectURL(song.payload.image)}
+                              alt={song.payload.image_name}
+                              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                            />
+                          ) : (
+                             <span>No Image</span> 
+                            
+                              // <img
+                              //src={URL.createObjectURL(song.payload.image)}
+                              //alt={song.payload.image_name}
+                              //style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                           // /> 
+                            
+                            
+                          )}
 
                         </Box>
                         <Box sx={{ display: 'flex', alignItems: 'center', px: 0.5 }}>

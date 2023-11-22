@@ -18,19 +18,8 @@ const songSlice = createSlice({
             }
         },
         
-        // deleteSong: (state) => {
-        //         return {
-        //             ...state,
-        //             name: '',
-        //             link: '',
-        //             source: '',
-        //             image: null,
-        //             image_name:''
-        //         }
-        // }
-        // Note -> This reducer action doesn't work properly
     }
 })
 
-export const {addSong , deleteSong } = songSlice.actions
+export const {addSong} = songSlice.actions
 export default songSlice.reducer
